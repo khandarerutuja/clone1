@@ -1,22 +1,26 @@
-name: docker build and push 
+name: Docker Build and Push
+
 on:
   push:
-    branches: 
-      -main
+    branches:
+      - main
+
 jobs:
   docker:
-  runs-on: ubuntu-latest
-  steps:
-    -name: checkout the code
-    uses: actions/checkout@v4
+    runs-on: ubuntu-latest
 
-    -name: docker login
-    uses: docker/login-actions@v3
-    with:
-      username: ${{ secrets.docker_username }}
-      password: ${{ secrets.docker_password }}
-    -name: doker image build
-    run: docker build -t khandarerutuja/demorun .
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
-    -name: docker push
-    run: docker push khandarerutuja/demorun
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.docker_username }}
+          password: ${{ secrets.docker_password }}
+
+      - name: Docker Image Build
+        run: docker build -t khandarerutuja/demorun:latest .
+
+      - name: Docker Push
+        run: docker push khandarerutuja/demorun:latest
