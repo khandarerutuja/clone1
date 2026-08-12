@@ -1,0 +1,22 @@
+name: docker build and push 
+on:
+  push:
+    branches: 
+      -main
+jobs:
+  docker:
+  runs-on: ubuntu-latest
+  steps:
+    -name: checkout the code
+    uses: actions/checkout@v4
+
+    -name: docker login
+    uses: docker/login-actions@v3
+    with:
+      username: ${{ secrets.docker_username }}
+      password: ${{ secrets.docker_password }}
+    -name: doker image build
+    run: docker build -t khandarerutuja/demorun .
+
+    -name: docker push
+    run: docker push khandarerutuja/demorun
